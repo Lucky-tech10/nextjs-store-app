@@ -2595,6 +2595,12 @@ try {
   }
 ```
 
+### Update Clerk
+
+```
+npm install @clerk/nextjs@latest @clerk/clerk-sdk-node@latest @clerk/backend@latest
+```
+
 ### Create Bucket, Setup Policy and API Keys
 
 ```env
