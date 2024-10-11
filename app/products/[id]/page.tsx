@@ -2,15 +2,21 @@ import Image from "next/image";
 import { formatCurrency } from "@/utils/format";
 import FavoriteToggleButton from "@/components/products/FavoriteToggleButton";
 import BreadCrumbs from "@/components/single-products/BreadCrumbs";
-import { fetchSingleProducts } from "@/utils/action";
+import { fetchSingleProducts, findExistingReview } from "@/utils/action";
 import ProductRating from "@/components/single-products/ProductRating";
 import AddToCart from "@/components/single-products/AddToCart";
 import ShareButton from "@/components/single-products/ShareButton";
+import ProductReviews from "@/components/reviews/ProductReviews";
+import SubmitReview from "@/components/reviews/SubmitReview";
+import { auth } from "@clerk/nextjs/server";
 
 async function SingleProductPage({ params }: { params: { id: string } }) {
   const product = await fetchSingleProducts(params.id);
   const { name, image, company, description, price } = product;
   const dollarsAmount = formatCurrency(price);
+  const { userId } = auth();
+  const reviewDoesNotExist =
+    userId && !(await findExistingReview(userId, product.id));
 
   return (
     <section>
@@ -36,7 +42,7 @@ async function SingleProductPage({ params }: { params: { id: string } }) {
               <ShareButton name={product.name} productId={params.id} />
             </div>
           </div>
-          <ProductRating />
+          <ProductRating productId={params.id} />
           <h4 className="text-xl mt-2">{company}</h4>
           <p className="mt-3 text-md bg-muted inline-block p-2 rounded-md">
             {dollarsAmount}
@@ -45,6 +51,8 @@ async function SingleProductPage({ params }: { params: { id: string } }) {
           <AddToCart />
         </div>
       </div>
+      <ProductReviews productId={params.id} />
+      {reviewDoesNotExist && <SubmitReview productId={params.id} />}
     </section>
   );
 }
