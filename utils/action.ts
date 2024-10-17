@@ -481,7 +481,7 @@ export const updateCart = async (cart: Cart) => {
 
 export const addToCartAction = async (prevState: any, formData: FormData) => {
   const user = await getAuthUser();
-  console.log(user);
+  // console.log(user);
   try {
     const productId = formData.get("productId") as string;
     const amount = Number(formData.get("amount"));
