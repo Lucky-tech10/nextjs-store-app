@@ -9,7 +9,7 @@ import {
   reviewSchema,
   validateWithZodSchema,
 } from "./schema";
-import { deleteImage, uploadImage } from "./supababe";
+import { deleteImage, uploadImage } from "./supabase";
 import { revalidatePath } from "next/cache";
 import { Cart } from "@prisma/client";
 
