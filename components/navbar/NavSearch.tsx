@@ -31,7 +31,7 @@ function NavSearch() {
     <Input
       type="search"
       placeholder="search products..."
-      className="max-w-xs dark:bg-muted"
+      className="max-w-sm sm:max-w-xs dark:bg-muted"
       value={search}
       onChange={(e) => {
         setSearch(e.target.value);
